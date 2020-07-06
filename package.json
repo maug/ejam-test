@@ -1,6 +1,9 @@
 {
   "name": "ejam-test",
   "version": "0.1.0",
+  "engines": {
+    "node": "12.x"
+  },
   "scripts": {
     "build": "node build.js",
     "lint": "tslint --project \"tsconfig.json\"",
