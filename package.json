@@ -9,7 +9,8 @@
     "lint": "tslint --project \"tsconfig.json\"",
     "start": "node -r module-alias/register ./dist --env=production",
     "start:dev": "nodemon",
-    "test": "nodemon --config ./spec/nodemon.json"
+    "test": "nodemon --config ./spec/nodemon.json",
+    "heroku-postbuild": "cd client && yarn install && yarn run build"
   },
   "nodemonConfig": {
     "watch": [

@@ -56,7 +56,9 @@ app.set('views', viewsDir);
 const staticDir = path.join(__dirname, 'public');
 app.use(express.static(staticDir));
 app.get('*', (req: Request, res: Response) => {
-    res.sendFile('index.html', {root: viewsDir});
+    // mytodo: serwowanie
+    // res.sendFile('index.html', {root: viewsDir});
+    res.sendFile(path.join(__dirname + '/../client/build/index.html'))
 });
 
 // Export express instance
