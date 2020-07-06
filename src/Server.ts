@@ -54,10 +54,16 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 const viewsDir = path.join(__dirname, 'views');
 app.set('views', viewsDir);
 const staticDir = path.join(__dirname, 'public');
-app.use(express.static(staticDir));
+
+// app.use(express.static(staticDir));
+
+// Serve static files from the React app
+app.use(express.static(path.join(__dirname, '../client/build')));
+
 app.get('*', (req: Request, res: Response) => {
     // mytodo: serwowanie
     // res.sendFile('index.html', {root: viewsDir});
+    console.log('PATHHHHH',__dirname + '/../client/build/index.html');
     res.sendFile(path.join(__dirname + '/../client/build/index.html'))
 });
 
