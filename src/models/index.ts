@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 
+import Deployment from './deployment';
 import Template from './template';
 
 const connectDb = () => {
@@ -14,7 +15,7 @@ const connectDb = () => {
 
 };
 
-const models = { Template };
+const models = { Deployment, Template };
 
 export { connectDb };
 
