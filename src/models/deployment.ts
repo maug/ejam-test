@@ -8,10 +8,12 @@ const deploymentSchema = new Schema({
 });
 
 interface DeploymentProps extends Document {
-    name: string,
-    versions: string[],
+    url: string,
+    templateName: string,
+    version: string,
+    deployedAt: Date,
 }
 
 const Deployment: Model<DeploymentProps> = mongoose.model('Deployment', deploymentSchema, 'deployments');
 
-export default Deployment;
+export { Deployment };

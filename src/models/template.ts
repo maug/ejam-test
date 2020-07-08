@@ -12,4 +12,4 @@ interface TemplateProps extends Document {
 
 const Template: Model<TemplateProps> = mongoose.model('Template', templateSchema, 'templates');
 
-export default Template;
+export { Template };

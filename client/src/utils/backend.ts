@@ -1,4 +1,4 @@
-import { Template } from "../types/Template";
+import { Template } from "../redux/store";
 
 export function getTemplates(): Promise<Template[]> {
   return httpGet('/api/templates');
