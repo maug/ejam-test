@@ -7,6 +7,7 @@ import store from './redux/store';
 import { setTemplates } from "./redux/actions";
 import { useSelector } from "react-redux";
 import { AppState } from "./redux/reducers";
+import { DeploymentForm } from "./components/DeploymenForm";
 
 function App() {
   const isInitialized = useSelector<AppState>((state => state.isInitialized));
@@ -16,27 +17,7 @@ function App() {
     return <div>Loading...</div>;
   } else {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Zesraj się <code>src/App.tsx</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Wypierdalaj kozi bobku!
-          </a>
-          <ul>
-            {templates.map(t => (
-              <li key={t.name}>{t.name}</li>
-            ))}
-          </ul>
-        </header>
-      </div>
+      <DeploymentForm />
     );
   }
 }

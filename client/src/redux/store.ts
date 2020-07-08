@@ -3,7 +3,7 @@ import { appReducer } from "./reducers";
 
 export interface Template {
   name: string,
-  version: string[];
+  versions: string[];
 }
 
 export interface Deployment {
