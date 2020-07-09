@@ -1,14 +1,23 @@
 import { Deployment, Template } from "./store";
-import { ADD_DEPLOYMENT, AppActionTypes, DELETE_DEPLOYMENT, SET_DEPLOYMENTS, SET_TEMPLATES } from "./actions";
+import {
+  AppActionTypes,
+  ADD_DEPLOYMENT,
+  DELETE_DEPLOYMENT,
+  SET_DEPLOYMENTS,
+  SET_TEMPLATES,
+  SHOW_ERROR
+} from "./actions";
 
 export interface AppState {
   isInitialized: boolean,
+  error: string,
   templates: Template[],
   deployments: Deployment[],
 }
 
 const defaultState: AppState = {
   isInitialized: false,
+  error: '',
   templates: [],
   deployments: [],
 }
@@ -16,6 +25,12 @@ const defaultState: AppState = {
 function appReducer(state: AppState = defaultState, action: AppActionTypes): AppState {
   console.log('appReducer', action);
   switch (action.type) {
+    case SHOW_ERROR: {
+      return {
+        ...state,
+        error: action.text,
+      };
+    }
     case SET_TEMPLATES: {
       return {
         ...state,

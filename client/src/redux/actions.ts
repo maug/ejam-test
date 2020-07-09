@@ -2,12 +2,21 @@ import { Deployment, Template } from "./store";
 
 // Action types
 
-const SET_TEMPLATES = 'SET_TEMPLATES'
-const SET_DEPLOYMENTS = 'SET_DEPLOYMENTS'
-const ADD_DEPLOYMENT = 'ADD_DEPLOYMENT'
-const DELETE_DEPLOYMENT = 'DELETE_DEPLOYMENT'
+const SHOW_ERROR = 'SHOW_ERROR';
+const SET_TEMPLATES = 'SET_TEMPLATES';
+const SET_DEPLOYMENTS = 'SET_DEPLOYMENTS';
+const ADD_DEPLOYMENT = 'ADD_DEPLOYMENT';
+const DELETE_DEPLOYMENT = 'DELETE_DEPLOYMENT';
 
 // Action creators
+
+interface ShowErrorAction {
+  type: typeof SHOW_ERROR,
+  text: string,
+}
+function showError(text: string | false): ShowErrorAction {
+  return { type: SHOW_ERROR, text: typeof text === 'string' ? text : '' };
+}
 
 interface SetTemplatesAction {
   type: typeof SET_TEMPLATES,
@@ -41,8 +50,14 @@ function deleteDeployment(deployment: Deployment): DeleteDeploymentAction {
   return { type: DELETE_DEPLOYMENT, deployment };
 }
 
-export type AppActionTypes = SetTemplatesAction | SetDeploymentsAction | AddDeploymentAction | DeleteDeploymentAction;
+export type AppActionTypes =
+  ShowErrorAction |
+  SetTemplatesAction |
+  SetDeploymentsAction |
+  AddDeploymentAction |
+  DeleteDeploymentAction;
 export {
+  SHOW_ERROR, showError,
   SET_TEMPLATES, setTemplates,
   SET_DEPLOYMENTS, setDeployments,
   ADD_DEPLOYMENT, addDeployment,

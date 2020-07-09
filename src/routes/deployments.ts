@@ -29,13 +29,17 @@ router.post('/', async (req: Request, res: Response) => {
     let deployment = new models.Deployment({ templateName, version, url, deployedAt: new Date()});
     deployment = await deployment.save();
     console.log('deployment', deployment);
-    return res.status(CREATED).json(deployment);
+    return res.status(OK).json(deployment);
 });
 
 router.delete('/:id', async (req: Request, res: Response) => {
-    const result = await models.Deployment.deleteOne({ _id: req.params.id });
-    console.log('delete', result);
-    return res.status(OK).json(result.deletedCount === 1);
+    try {
+        const result = await models.Deployment.deleteOne({ _id: req.params.id });
+        console.log('delete', result);
+        return res.status(OK).json(result.deletedCount === 1);
+    } catch (e) {
+        return res.status(BAD_REQUEST).json({ error: e.toString() });
+    }
 });
 
 export default router;

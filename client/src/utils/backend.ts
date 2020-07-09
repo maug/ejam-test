@@ -17,50 +17,43 @@ export function deleteDeployment(id: string): Promise<boolean> {
   return httpDelete('/api/deployments/' + id);
 }
 
-// getDeployments
-//
-// addDeployment
-//
-// deleteDeployment
-
-function httpGet(path: string): Promise<any> {
-  return fetch(path, getOptions('GET'))
-    .then(response => response.json())
-    .catch(reason => {
-      alert(reason);
-      console.error('ERROR IN API CALL', reason);
-      throw new Error(reason);
-    });
+async function httpGet(path: string): Promise<any> {
+  const response = await fetch(path, getOptions('GET'));
+  await checkForError(response);
+  return response.json();
 }
 
-
-function httpPost(path: string, data: any): Promise<any> {
-  return fetch(path, getOptions('POST', data))
-    .then(response => {console.log('RES', response); return response;})
-    .then(response => response.json())
-    .catch(reason => {
-      alert(reason);
-      console.error('ERROR IN API CALL', reason);
-      throw new Error(reason);
-    });
+async function httpPost(path: string, data: any): Promise<any> {
+  const response = await fetch(path, getOptions('POST', data));
+  await checkForError(response);
+  return response.json();
 }
 
-function httpDelete(path: string) {
-  return fetch(path, getOptions('DELETE'))
-    .then(response => {console.log('RES', response); return response;})
-    .then(response => response.json())
-    .catch(reason => {
-      alert(reason);
-      console.error('ERROR IN API CALL', reason);
-      throw new Error(reason);
-    });
+async function httpDelete(path: string): Promise<any> {
+  const response = await fetch(path, getOptions('DELETE'));
+  await checkForError(response);
+  return response.json();
 }
 
-
-function httpPut(path: string, data: any) {
-  return fetch(path, getOptions('PUT', data));
+async function httpPut(path: string, data: any): Promise<any> {
+  const response = await fetch(path, getOptions('PUT', data));
+  await checkForError(response);
+  return response.json();
 }
 
+async function checkForError(response: Response): Promise<void> {
+  console.log('RSSS', response);
+  if (!response.ok) {
+    let errorMsg = await response.text();
+    try {
+      errorMsg = JSON.parse(errorMsg).error;
+    } catch (e) {
+      // not json error response, strip html tags from error message
+      errorMsg = errorMsg.replace(/<[^>]+>/g, '')
+    }
+    throw new Error(errorMsg);
+  }
+}
 
 interface Options {
   dataType: string,

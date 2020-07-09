@@ -9,33 +9,35 @@ import { DeploymentForm } from "./components/DeploymentForm";
 import * as actions from "./redux/actions";
 import { Deployments } from "./components/Deployments";
 import { addDeployment, deleteDeployment } from "./utils/backend";
+import { AlertDialog } from "./components/AlertDialog";
 
 
 
 function App() {
   const dispatch = useDispatch();
-  const isInitialized = useSelector<AppState>((state => state.isInitialized));
+  const isInitialized = useSelector((state: AppState) => state.isInitialized);
+  const error = useSelector((state: AppState) => state.error);
   const templates = useSelector((state: AppState): Template[] => state.templates);
-  console.log('RENDERING', isInitialized, templates);
 
   async function handleAddDeployment(newValue: DeploymentRaw) {
     try {
-      const deployment = await addDeployment(newValue)
-      dispatch(actions.addDeployment(deployment))
+      const deployment = await addDeployment(newValue);
+      dispatch(actions.addDeployment(deployment));
     } catch (e) {
-      console.error('No i chuj');
+      dispatch(actions.showError(e.toString()));
     }
   }
 
   async function handleDeleteDeployment(deployment: Deployment) {
     try {
       const deleted = await deleteDeployment(deployment._id);
-      if (deleted) {
-        console.log('DELETED', deleted);
-        dispatch(actions.deleteDeployment(deployment))
+      if (deleted === true) {
+        dispatch(actions.deleteDeployment(deployment));
+      } else {
+        dispatch(actions.showError('Deployment couldn\'t be deleted'));
       }
     } catch (e) {
-      console.error('No i chuj');
+      dispatch(actions.showError(e.toString()));
     }
   }
 
@@ -48,6 +50,12 @@ function App() {
           <DeploymentForm handleAddDeployment={handleAddDeployment} />
           <Deployments handleDeleteDeployment={handleDeleteDeployment}/>
         </Container>
+        <AlertDialog
+          open={!!error}
+          handleClose={() => dispatch(actions.showError(false))}
+          title="ERROR"
+          text={error}
+        />
       </div>
     );
   }
