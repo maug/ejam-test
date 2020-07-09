@@ -17,7 +17,6 @@ function App() {
   const dispatch = useDispatch();
   const isInitialized = useSelector((state: AppState) => state.isInitialized);
   const error = useSelector((state: AppState) => state.error);
-  const templates = useSelector((state: AppState): Template[] => state.templates);
 
   async function handleAddDeployment(newValue: DeploymentRaw) {
     try {
@@ -33,8 +32,6 @@ function App() {
       const deleted = await deleteDeployment(deployment._id);
       if (deleted === true) {
         dispatch(actions.deleteDeployment(deployment));
-      } else {
-        dispatch(actions.showError('Deployment couldn\'t be deleted'));
       }
     } catch (e) {
       dispatch(actions.showError(e.toString()));

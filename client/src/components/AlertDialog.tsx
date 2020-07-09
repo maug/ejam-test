@@ -10,7 +10,6 @@ import {
 
 export function AlertDialog({ open, handleClose, title, text }:
   { open: boolean, handleClose: () => void, title: string, text: string }) {
-  console.log('PIZDA', typeof text, text);
   return (
     <Dialog
       open={open}
