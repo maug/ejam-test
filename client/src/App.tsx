@@ -1,15 +1,15 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import { getTemplates } from "./utils/backend";
-import { Template } from "./redux/store";
-import store from './redux/store';
-import { setTemplates } from "./redux/actions";
-import { useSelector } from "react-redux";
+import { Deployment, Template } from "./redux/store";
+import { useDispatch, useSelector } from "react-redux";
 import { AppState } from "./redux/reducers";
-import { DeploymentForm } from "./components/DeploymenForm";
+import { DeploymentForm } from "./components/DeploymentForm";
+import { addDeployment } from "./redux/actions";
+import { Deployments } from "./components/Deployments";
 
 function App() {
+  const dispatch = useDispatch();
   const isInitialized = useSelector<AppState>((state => state.isInitialized));
   const templates = useSelector((state: AppState): Template[] => state.templates);
   console.log('RENDERING', isInitialized, templates);
@@ -17,11 +17,13 @@ function App() {
     return <div>Loading...</div>;
   } else {
     return (
-      <DeploymentForm />
+      <div>
+        <DeploymentForm handleAddDeployment={(deployment: Deployment) => dispatch(addDeployment(deployment))} />
+        <Deployments/>
+      </div>
     );
   }
 }
 
-getTemplates().then((templates: Template[]) => store.dispatch(setTemplates(templates)));
 
 export default App;
