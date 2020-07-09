@@ -19,4 +19,18 @@ router.get('/', async (req: Request, res: Response) => {
 });
 
 
+router.post('/', async (req: Request, res: Response) => {
+    const { templateName, version, url } = req.body;
+    if (!templateName || !version || !url ) {
+        return res.status(BAD_REQUEST).json({
+            error: paramMissingError,
+        });
+    }
+    const ala = new models.Deployment({ templateName, version, url, deployedAt: new Date()});
+    console.log('ala', ala);
+    const dupa = await ala.save();
+    console.log('dupa', dupa);
+    return res.status(CREATED).json(dupa);
+});
+
 export default router;

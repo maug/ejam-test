@@ -6,10 +6,14 @@ export interface Template {
   versions: string[];
 }
 
-export interface Deployment {
+export interface DeploymentRaw {
   url: string,
   templateName: string,
   version: string,
+}
+
+export interface Deployment extends DeploymentRaw {
+  _id: string,
   deployedAt: Date,
 }
 

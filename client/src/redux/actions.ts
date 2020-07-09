@@ -2,7 +2,7 @@
 * action types
 */
 
-import { Deployment, Template } from "./store";
+import { Deployment, DeploymentRaw, Template } from "./store";
 
 const SET_TEMPLATES = 'SET_TEMPLATES'
 const ADD_DEPLOYMENT = 'ADD_DEPLOYMENT'

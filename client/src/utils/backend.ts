@@ -1,7 +1,16 @@
-import { Template } from "../redux/store";
+import { Deployment, Template } from "../redux/store";
 
 export function getTemplates(): Promise<Template[]> {
   return httpGet('/api/templates');
+}
+
+export function getDeployments(): Promise<Template[]> {
+  return httpGet('/api/deployments');
+}
+
+export function addDeployment({ templateName, version, url }:
+  { templateName: string, version: string, url: string }): Promise<Deployment> {
+  return httpPost('/api/deployments', { templateName, version, url });
 }
 
 // getDeployments
@@ -16,12 +25,20 @@ function httpGet(path: string): Promise<any> {
     .catch(reason => {
       alert(reason);
       console.error('ERROR IN API CALL', reason);
+      throw new Error(reason);
     });
 }
 
 
-function httpPost(path: string, data: any) {
-  return fetch(path, getOptions('POST', data));
+function httpPost(path: string, data: any): Promise<any> {
+  return fetch(path, getOptions('POST', data))
+    .then(response => {console.log('RES', response); return response;})
+    .then(response => response.json())
+    .catch(reason => {
+      alert(reason);
+      console.error('ERROR IN API CALL', reason);
+      throw new Error(reason);
+    });
 }
 
 

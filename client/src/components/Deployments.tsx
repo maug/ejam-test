@@ -20,7 +20,7 @@ export function Deployments() {
   return (
     <div>
       <ul>
-        {deployments.map(d => <li>{d.templateName}</li>)}
+        {deployments.map(d => <li key={d._id}>{d.templateName} {d.version} {d.url} {d.deployedAt}</li>)}
       </ul>
     </div>
   );

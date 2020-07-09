@@ -10,11 +10,11 @@ import {
 } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
-import { Deployment, Template } from "../redux/store";
+import { Deployment, DeploymentRaw, Template } from "../redux/store";
 import { AppState } from "../redux/reducers";
 import { Unpacked } from "../types";
 
-export function DeploymentForm({ handleAddDeployment }: { handleAddDeployment: (d: Deployment) => void }) {
+export function DeploymentForm({ handleAddDeployment }: { handleAddDeployment: (d: DeploymentRaw) => void }) {
   const templates = useSelector((state: AppState): Template[] => state.templates);
   const [template, setTemplate] = useState<Template | null>(null);
   const [version, setVersion] = useState<Unpacked<Template['versions']> | null>(null);
@@ -75,7 +75,6 @@ export function DeploymentForm({ handleAddDeployment }: { handleAddDeployment: (
           templateName: template!.name,
           version: version!,
           url,
-          deployedAt: new Date()
         })}
         variant="contained"
         color="primary"
