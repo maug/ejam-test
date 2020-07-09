@@ -41,7 +41,7 @@ function App() {
   if (!isInitialized) {
     return (
       <Grid container alignItems="center" justify="center" style={{ minHeight: '100vh' }}>
-        <Grid item><Typography><h1>Loading...</h1></Typography></Grid>
+        <Grid item><Typography variant="h4">Loading...</Typography></Grid>
       </Grid>
     );
   } else {
