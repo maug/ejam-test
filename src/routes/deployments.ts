@@ -12,7 +12,7 @@ const router = Router();
 
 
 router.get('/', async (req: Request, res: Response) => {
-    const deployments = await models.Deployment.find();
+    const deployments = await models.Deployment.find().sort({ deployedAt: -1 });
     return res.status(OK).json(deployments);
     // const users = await userDao.getAll();
     // return res.status(OK).json({users});

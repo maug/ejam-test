@@ -1,8 +1,9 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import { Deployment, DeploymentRaw, Template } from "./redux/store";
 import { useDispatch, useSelector } from "react-redux";
+import { Container } from "@material-ui/core";
+import { Deployment, DeploymentRaw, Template } from "./redux/store";
 import { AppState } from "./redux/reducers";
 import { DeploymentForm } from "./components/DeploymentForm";
 import * as actions from "./redux/actions";
@@ -31,8 +32,10 @@ function App() {
   } else {
     return (
       <div>
-        <DeploymentForm handleAddDeployment={handleAddDeployment} />
-        <Deployments/>
+        <Container maxWidth="md">
+          <DeploymentForm handleAddDeployment={handleAddDeployment} />
+          <Deployments/>
+        </Container>
       </div>
     );
   }

@@ -4,7 +4,7 @@ export function getTemplates(): Promise<Template[]> {
   return httpGet('/api/templates');
 }
 
-export function getDeployments(): Promise<Template[]> {
+export function getDeployments(): Promise<Deployment[]> {
   return httpGet('/api/deployments');
 }
 
