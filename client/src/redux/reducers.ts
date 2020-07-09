@@ -1,5 +1,5 @@
 import { Deployment, Template } from "./store";
-import { ADD_DEPLOYMENT, AppActionTypes, SET_DEPLOYMENTS, SET_TEMPLATES } from "./actions";
+import { ADD_DEPLOYMENT, AppActionTypes, DELETE_DEPLOYMENT, SET_DEPLOYMENTS, SET_TEMPLATES } from "./actions";
 
 export interface AppState {
   isInitialized: boolean,
@@ -33,6 +33,12 @@ function appReducer(state: AppState = defaultState, action: AppActionTypes): App
       return {
         ...state,
         deployments: [action.deployment].concat(state.deployments),
+      };
+    }
+    case DELETE_DEPLOYMENT: {
+      return {
+        ...state,
+        deployments: state.deployments.filter(d => d !== action.deployment),
       };
     }
     default:

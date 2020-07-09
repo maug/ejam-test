@@ -18,7 +18,7 @@ import {
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { makeStyles } from "@material-ui/core/styles";
 
-import { Deployment, Template } from "../redux/store";
+import { Deployment, DeploymentRaw, Template } from "../redux/store";
 import { AppState } from "../redux/reducers";
 import { Unpacked } from "../types";
 
@@ -29,7 +29,7 @@ const useStyles = makeStyles({
   },
 });
 
-export function Deployments() {
+export function Deployments({ handleDeleteDeployment }: { handleDeleteDeployment: (d: Deployment) => void }) {
   const deployments = useSelector((state: AppState): Deployment[] => state.deployments);
 
   const classes = useStyles();
@@ -44,6 +44,7 @@ export function Deployments() {
               <TableCell>Version</TableCell>
               <TableCell>URL</TableCell>
               <TableCell>Deployed</TableCell>
+              <TableCell/>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -58,6 +59,15 @@ export function Deployments() {
                   {new Date(row.deployedAt).toLocaleDateString('en-US')}
                   {' '}
                   {new Date(row.deployedAt).toLocaleTimeString('en-US')}
+                </TableCell>
+                <TableCell>
+                  <Button
+                    onClick={() => handleDeleteDeployment(row)}
+                    variant="text"
+                    color="secondary"
+                  >
+                    Delete
+                  </Button>
                 </TableCell>
               </TableRow>
             ))}

@@ -26,11 +26,16 @@ router.post('/', async (req: Request, res: Response) => {
             error: paramMissingError,
         });
     }
-    const ala = new models.Deployment({ templateName, version, url, deployedAt: new Date()});
-    console.log('ala', ala);
-    const dupa = await ala.save();
-    console.log('dupa', dupa);
-    return res.status(CREATED).json(dupa);
+    let deployment = new models.Deployment({ templateName, version, url, deployedAt: new Date()});
+    deployment = await deployment.save();
+    console.log('deployment', deployment);
+    return res.status(CREATED).json(deployment);
+});
+
+router.delete('/:id', async (req: Request, res: Response) => {
+    const result = await models.Deployment.deleteOne({ _id: req.params.id });
+    console.log('delete', result);
+    return res.status(OK).json(result.deletedCount === 1);
 });
 
 export default router;

@@ -8,7 +8,7 @@ import { AppState } from "./redux/reducers";
 import { DeploymentForm } from "./components/DeploymentForm";
 import * as actions from "./redux/actions";
 import { Deployments } from "./components/Deployments";
-import { addDeployment } from "./utils/backend";
+import { addDeployment, deleteDeployment } from "./utils/backend";
 
 
 
@@ -27,6 +27,18 @@ function App() {
     }
   }
 
+  async function handleDeleteDeployment(deployment: Deployment) {
+    try {
+      const deleted = await deleteDeployment(deployment._id);
+      if (deleted) {
+        console.log('DELETED', deleted);
+        dispatch(actions.deleteDeployment(deployment))
+      }
+    } catch (e) {
+      console.error('No i chuj');
+    }
+  }
+
   if (!isInitialized) {
     return <div>Loading...</div>;
   } else {
@@ -34,7 +46,7 @@ function App() {
       <div>
         <Container maxWidth="md">
           <DeploymentForm handleAddDeployment={handleAddDeployment} />
-          <Deployments/>
+          <Deployments handleDeleteDeployment={handleDeleteDeployment}/>
         </Container>
       </div>
     );

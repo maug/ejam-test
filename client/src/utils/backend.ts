@@ -13,6 +13,10 @@ export function addDeployment({ templateName, version, url }:
   return httpPost('/api/deployments', { templateName, version, url });
 }
 
+export function deleteDeployment(id: string): Promise<boolean> {
+  return httpDelete('/api/deployments/' + id);
+}
+
 // getDeployments
 //
 // addDeployment
@@ -41,15 +45,22 @@ function httpPost(path: string, data: any): Promise<any> {
     });
 }
 
+function httpDelete(path: string) {
+  return fetch(path, getOptions('DELETE'))
+    .then(response => {console.log('RES', response); return response;})
+    .then(response => response.json())
+    .catch(reason => {
+      alert(reason);
+      console.error('ERROR IN API CALL', reason);
+      throw new Error(reason);
+    });
+}
+
 
 function httpPut(path: string, data: any) {
   return fetch(path, getOptions('PUT', data));
 }
 
-
-function httpDelete(path: string) {
-  return fetch(path, getOptions('DELETE'));
-}
 
 interface Options {
   dataType: string,

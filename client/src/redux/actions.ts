@@ -1,16 +1,13 @@
-/*
-* action types
-*/
+import { Deployment, Template } from "./store";
 
-import { Deployment, DeploymentRaw, Template } from "./store";
+// Action types
 
 const SET_TEMPLATES = 'SET_TEMPLATES'
 const SET_DEPLOYMENTS = 'SET_DEPLOYMENTS'
 const ADD_DEPLOYMENT = 'ADD_DEPLOYMENT'
+const DELETE_DEPLOYMENT = 'DELETE_DEPLOYMENT'
 
-/*
- * action creators
- */
+// Action creators
 
 interface SetTemplatesAction {
   type: typeof SET_TEMPLATES,
@@ -36,9 +33,18 @@ function addDeployment(deployment: Deployment): AddDeploymentAction {
   return { type: ADD_DEPLOYMENT, deployment };
 }
 
-export type AppActionTypes = SetTemplatesAction | SetDeploymentsAction | AddDeploymentAction;
+interface DeleteDeploymentAction {
+  type: typeof DELETE_DEPLOYMENT,
+  deployment: Deployment,
+}
+function deleteDeployment(deployment: Deployment): DeleteDeploymentAction {
+  return { type: DELETE_DEPLOYMENT, deployment };
+}
+
+export type AppActionTypes = SetTemplatesAction | SetDeploymentsAction | AddDeploymentAction | DeleteDeploymentAction;
 export {
   SET_TEMPLATES, setTemplates,
   SET_DEPLOYMENTS, setDeployments,
   ADD_DEPLOYMENT, addDeployment,
+  DELETE_DEPLOYMENT, deleteDeployment,
 };
