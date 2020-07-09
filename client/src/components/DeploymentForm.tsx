@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useSelector } from "react-redux";
 import {
   Box,
-  Button,
+  Button, Container,
   FormControl,
   TextField,
 } from '@material-ui/core';
@@ -29,6 +29,7 @@ export function DeploymentForm({ handleAddDeployment }: { handleAddDeployment: (
 
   return (
     <Box style={{textAlign: "center"}}>
+      <img src="logo_ejam.png"  alt="Logo eJam" style={{ width: "100px" }}/><br/><br/>
       <FormControl className={classes.input}>
         <Autocomplete
           value={template}
