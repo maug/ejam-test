@@ -14,7 +14,7 @@ export interface DeploymentRaw {
 
 export interface Deployment extends DeploymentRaw {
   _id: string,
-  deployedAt: Date,
+  deployedAt: string,
 }
 
 const store = createStore(appReducer);
