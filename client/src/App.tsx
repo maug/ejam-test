@@ -2,7 +2,7 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import { useDispatch, useSelector } from "react-redux";
-import { Container, Grid, Typography } from "@material-ui/core";
+import { Box, Container, Grid, Paper, Typography } from "@material-ui/core";
 import { Deployment, DeploymentRaw, Template } from "./redux/store";
 import { AppState } from "./redux/reducers";
 import { DeploymentForm } from "./components/DeploymentForm";
@@ -48,8 +48,12 @@ function App() {
     return (
       <div>
         <Container maxWidth="md">
-          <DeploymentForm handleAddDeployment={handleAddDeployment} />
-          <Deployments handleDeleteDeployment={handleDeleteDeployment}/>
+          <Box py={5}>
+            <DeploymentForm handleAddDeployment={handleAddDeployment} />
+          </Box>
+          <Box>
+            <Deployments handleDeleteDeployment={handleDeleteDeployment}/>
+          </Box>
         </Container>
         <AlertDialog
           open={!!error}

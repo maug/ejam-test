@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import { useSelector } from "react-redux";
 import {
+  Box,
   Button,
   FormControl,
-  FormHelperText,
-  Input,
-  InputLabel,
   TextField,
 } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
@@ -13,6 +11,13 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import { Deployment, DeploymentRaw, Template } from "../redux/store";
 import { AppState } from "../redux/reducers";
 import { Unpacked } from "../types";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles({
+  input: {
+    width: 300,
+  },
+});
 
 export function DeploymentForm({ handleAddDeployment }: { handleAddDeployment: (d: DeploymentRaw) => void }) {
   const templates = useSelector((state: AppState): Template[] => state.templates);
@@ -20,9 +25,11 @@ export function DeploymentForm({ handleAddDeployment }: { handleAddDeployment: (
   const [version, setVersion] = useState<Unpacked<Template['versions']> | null>(null);
   const [url, setUrl] = useState<string>('');
 
+  const classes = useStyles();
+
   return (
-    <div>
-      <FormControl>
+    <Box style={{textAlign: "center"}}>
+      <FormControl className={classes.input}>
         <Autocomplete
           value={template}
           onChange={(event, newValue: Template | null) => {
@@ -34,13 +41,11 @@ export function DeploymentForm({ handleAddDeployment }: { handleAddDeployment: (
           }}
           options={templates}
           getOptionLabel={t => t.name}
-          style={{ width: 300 }}
           renderInput={(params) => <TextField {...params} label="Select template" variant="outlined" />}
         />
-        <FormHelperText id="my-helper-text">We'll never share your email.</FormHelperText>
       </FormControl>
-      <br/>
-      <FormControl>
+      <br/><br/>
+      <FormControl className={classes.input}>
         <Autocomplete
           disabled={!template}
           value={version}
@@ -49,13 +54,11 @@ export function DeploymentForm({ handleAddDeployment }: { handleAddDeployment: (
             setVersion(newValue);
           }}
           options={template ? template.versions : []}
-          style={{ width: 300 }}
           renderInput={(params) => <TextField {...params} label="Select version" variant="outlined" />}
         />
-        <FormHelperText id="my-helper-text">We'll never share your email.</FormHelperText>
       </FormControl>
-      <br/>
-      <FormControl>
+      <br/><br/>
+      <FormControl className={classes.input}>
         <TextField
           value={url}
           onChange={(event) => {
@@ -63,12 +66,10 @@ export function DeploymentForm({ handleAddDeployment }: { handleAddDeployment: (
             setUrl(event.target.value);
           }}
           label="Enter URL"
-          style={{ width: 300 }}
           variant="outlined"
         />
-        <FormHelperText id="my-helper-text">We'll never share your email.</FormHelperText>
       </FormControl>
-      <br/>
+      <br/><br/>
       <Button
         disabled={!(template && version && url)}
         onClick={() => handleAddDeployment({
@@ -81,7 +82,7 @@ export function DeploymentForm({ handleAddDeployment }: { handleAddDeployment: (
       >
         Add deployment
       </Button>
-    </div>
+    </Box>
   );
 }
 
