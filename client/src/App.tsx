@@ -2,7 +2,7 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import { useDispatch, useSelector } from "react-redux";
-import { Container } from "@material-ui/core";
+import { Container, Grid, Typography } from "@material-ui/core";
 import { Deployment, DeploymentRaw, Template } from "./redux/store";
 import { AppState } from "./redux/reducers";
 import { DeploymentForm } from "./components/DeploymentForm";
@@ -39,7 +39,11 @@ function App() {
   }
 
   if (!isInitialized) {
-    return <div>Loading...</div>;
+    return (
+      <Grid container alignItems="center" justify="center" style={{ minHeight: '100vh' }}>
+        <Grid item><Typography><h1>Loading...</h1></Typography></Grid>
+      </Grid>
+    );
   } else {
     return (
       <div>
