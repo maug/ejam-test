@@ -3,6 +3,7 @@ import { Deployment, Template } from "./store";
 // Action types
 
 const SHOW_ERROR = 'SHOW_ERROR';
+const SET_INITIALIZED = 'SET_INITIALIZED';
 const SET_TEMPLATES = 'SET_TEMPLATES';
 const SET_DEPLOYMENTS = 'SET_DEPLOYMENTS';
 const ADD_DEPLOYMENT = 'ADD_DEPLOYMENT';
@@ -17,6 +18,14 @@ interface ShowErrorAction {
 }
 function showError(text: string | false): ShowErrorAction {
   return { type: SHOW_ERROR, text: typeof text === 'string' ? text : '' };
+}
+
+interface SetInitializedAction {
+  type: typeof SET_INITIALIZED,
+  initialized: boolean,
+}
+function setInitialized(initialized: boolean): SetInitializedAction {
+  return { type: SET_INITIALIZED, initialized };
 }
 
 interface SetTemplatesAction {
@@ -62,6 +71,7 @@ function updateCountdown(deployment_id: string, countdown: number): UpdateCountd
 
 export type AppActionTypes =
   ShowErrorAction |
+  SetInitializedAction |
   SetTemplatesAction |
   SetDeploymentsAction |
   AddDeploymentAction |
@@ -69,6 +79,7 @@ export type AppActionTypes =
   UpdateCountdownAction;
 export {
   SHOW_ERROR, showError,
+  SET_INITIALIZED, setInitialized,
   SET_TEMPLATES, setTemplates,
   SET_DEPLOYMENTS, setDeployments,
   ADD_DEPLOYMENT, addDeployment,

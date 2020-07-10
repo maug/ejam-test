@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import {
   Button,
@@ -11,20 +11,13 @@ import {
 } from '@material-ui/core';
 import { AppState } from "../redux/reducers";
 import * as actions from "../redux/actions";
-import { getDeployments } from "../utils/backend";
 import { Deployment } from "../redux/store";
-import { setDeployments } from "../redux/actions";
 import { CountdownTimer } from "./CountdownTimer";
 
 export function Deployments({ handleDeleteDeployment }: { handleDeleteDeployment: (d: Deployment) => void }) {
   const dispatch = useDispatch();
   const deployments = useSelector((state: AppState): AppState['deployments'] => state.deployments);
   const countdowns = useSelector((state: AppState): AppState['countdowns'] => state.countdowns);
-
-  useEffect(() => {
-    getDeployments().then((deployments: Deployment[]) => dispatch(setDeployments(deployments)))
-      .catch(err => dispatch(actions.showError(err.toString())));
-  }, []);
 
   function handleCountdownEnd(deployment_id: string): void {
     dispatch(actions.updateCountdown(deployment_id, 0));

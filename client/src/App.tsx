@@ -1,14 +1,13 @@
 import React, { useEffect } from 'react';
-import './App.css';
 import { useDispatch, useSelector } from "react-redux";
 import { Box, Container, Grid, Typography } from "@material-ui/core";
-import { Deployment, DeploymentRaw, Template } from "./redux/store";
-import { AppState } from "./redux/reducers";
-import { DeploymentForm } from "./components/DeploymentForm";
-import * as actions from "./redux/actions";
-import { Deployments } from "./components/Deployments";
 import { addDeployment, deleteDeployment, getDeployments, getTemplates } from "./utils/backend";
+import * as actions from "./redux/actions";
+import { AppState } from "./redux/reducers";
+import { Deployment, DeploymentRaw, Template } from "./redux/store";
 import { AlertDialog } from "./components/AlertDialog";
+import { Deployments } from "./components/Deployments";
+import { DeploymentForm } from "./components/DeploymentForm";
 
 function App() {
   const dispatch = useDispatch();
@@ -16,7 +15,11 @@ function App() {
   const error = useSelector((state: AppState) => state.error);
 
   useEffect(() => {
-    getTemplates().then((templates: Template[]) => dispatch(actions.setTemplates(templates)))
+    getTemplates()
+      .then((templates: Template[]) => dispatch(actions.setTemplates(templates)))
+      .then(() => getDeployments())
+      .then((deployments: Deployment[]) => dispatch(actions.setDeployments(deployments)))
+      .then(() => dispatch(actions.setInitialized(true)))
       .catch(err => dispatch(actions.showError(err.toString())));
   }, []);
 

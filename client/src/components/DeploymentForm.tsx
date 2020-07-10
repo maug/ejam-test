@@ -7,11 +7,11 @@ import {
   TextField,
 } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import { makeStyles } from "@material-ui/core/styles";
 
+import { Unpacked } from "../utils/types";
 import { DeploymentRaw, Template } from "../redux/store";
 import { AppState } from "../redux/reducers";
-import { Unpacked } from "../types";
-import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles({
   input: {

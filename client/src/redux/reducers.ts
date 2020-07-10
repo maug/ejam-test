@@ -4,6 +4,7 @@ import {
   AppActionTypes,
   DELETE_DEPLOYMENT,
   SET_DEPLOYMENTS,
+  SET_INITIALIZED,
   SET_TEMPLATES,
   SHOW_ERROR,
   UPDATE_COUNTDOWN
@@ -34,11 +35,16 @@ function appReducer(state: AppState = defaultState, action: AppActionTypes): App
         error: action.text,
       };
     }
+    case SET_INITIALIZED: {
+      return {
+        ...state,
+        isInitialized: action.initialized,
+      };
+    }
     case SET_TEMPLATES: {
       return {
         ...state,
         templates: action.templates,
-        isInitialized: true,
       };
     }
     case SET_DEPLOYMENTS: {
