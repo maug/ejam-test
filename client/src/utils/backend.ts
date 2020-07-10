@@ -18,30 +18,26 @@ export function deleteDeployment(id: string): Promise<boolean> {
 }
 
 async function httpGet(path: string): Promise<any> {
-  const response = await fetch(path, getOptions('GET'));
-  await checkForError(response);
+  const response = await fetch(path, getOptions('GET')).then(res => checkForError(res));
   return response.json();
 }
 
 async function httpPost(path: string, data: any): Promise<any> {
-  const response = await fetch(path, getOptions('POST', data));
-  await checkForError(response);
+  const response = await fetch(path, getOptions('POST', data)).then(res => checkForError(res));
   return response.json();
 }
 
 async function httpDelete(path: string): Promise<any> {
-  const response = await fetch(path, getOptions('DELETE'));
-  await checkForError(response);
+  const response = await fetch(path, getOptions('DELETE')).then(res => checkForError(res));
   return response.json();
 }
 
 async function httpPut(path: string, data: any): Promise<any> {
-  const response = await fetch(path, getOptions('PUT', data));
-  await checkForError(response);
+  const response = await fetch(path, getOptions('PUT', data)).then(res => checkForError(res));
   return response.json();
 }
 
-async function checkForError(response: Response): Promise<void> {
+async function checkForError(response: Response): Promise<Response> {
   if (!response.ok) {
     let errorMsg = await response.text();
     try {
@@ -52,6 +48,7 @@ async function checkForError(response: Response): Promise<void> {
     }
     throw new Error(errorMsg);
   }
+  return response;
 }
 
 interface Options {
