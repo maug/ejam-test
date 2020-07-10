@@ -4,12 +4,12 @@ import { LinearProgressWithLabel } from "./LinearProgressWithLabel";
 function useInterval(callback: () => void, delay: number) {
   const savedCallback = useRef<typeof callback>();
 
-  // Remember the latest callback
+  // remember the latest callback
   useEffect(() => {
     savedCallback.current = callback;
   }, [callback]);
 
-  // Set up the interval
+  // set up the interval
   useEffect(() => {
     function tick() {
       savedCallback.current!();
@@ -63,8 +63,13 @@ export function CountdownTimer({ countdownFrom, handleEnd }:
 
   return (
     <div>
-      {time && <span>{`${time.minutes}:${time.seconds}:${time.milliseconds}`}</span>}
-      {time && countdownFrom ? <LinearProgressWithLabel value={Math.round(100 - (timeInMilliseconds * 100 / countdownFrom))}/> : null }
+      {time && countdownFrom ?
+        <LinearProgressWithLabel
+          value={Math.round(100 - (timeInMilliseconds * 100 / countdownFrom))}
+          labelLeft={`${time.minutes}:${time.seconds}:${time.milliseconds}`}
+        />
+        : null
+      }
     </div>
   );
 }

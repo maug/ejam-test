@@ -1,9 +1,8 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import { useDispatch, useSelector } from "react-redux";
-import { Box, Container, Grid, Paper, Typography } from "@material-ui/core";
-import { Deployment, DeploymentRaw, Template } from "./redux/store";
+import { Box, Container, Grid, Typography } from "@material-ui/core";
+import { Deployment, DeploymentRaw } from "./redux/store";
 import { AppState } from "./redux/reducers";
 import { DeploymentForm } from "./components/DeploymentForm";
 import * as actions from "./redux/actions";

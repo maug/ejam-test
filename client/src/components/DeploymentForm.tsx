@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import { useSelector } from "react-redux";
 import {
   Box,
-  Button, Container,
+  Button,
   FormControl,
   TextField,
 } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
-import { Deployment, DeploymentRaw, Template } from "../redux/store";
+import { DeploymentRaw, Template } from "../redux/store";
 import { AppState } from "../redux/reducers";
 import { Unpacked } from "../types";
 import { makeStyles } from "@material-ui/core/styles";
@@ -63,7 +63,6 @@ export function DeploymentForm({ handleAddDeployment }: { handleAddDeployment: (
         <TextField
           value={url}
           onChange={(event) => {
-            console.log('setting new url', event.target.value);
             setUrl(event.target.value);
           }}
           label="Enter URL"

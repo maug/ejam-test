@@ -42,7 +42,6 @@ async function httpPut(path: string, data: any): Promise<any> {
 }
 
 async function checkForError(response: Response): Promise<void> {
-  console.log('RSSS', response);
   if (!response.ok) {
     let errorMsg = await response.text();
     try {
