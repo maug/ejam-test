@@ -22,6 +22,7 @@ function App() {
     try {
       const deployment = await addDeployment(newValue);
       dispatch(actions.addDeployment(deployment));
+      dispatch(actions.updateCountdown(deployment._id, Math.round(Math.random() * 25000) + 5000));
     } catch (e) {
       dispatch(actions.showError(e.toString()));
     }

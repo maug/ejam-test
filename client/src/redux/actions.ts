@@ -7,6 +7,7 @@ const SET_TEMPLATES = 'SET_TEMPLATES';
 const SET_DEPLOYMENTS = 'SET_DEPLOYMENTS';
 const ADD_DEPLOYMENT = 'ADD_DEPLOYMENT';
 const DELETE_DEPLOYMENT = 'DELETE_DEPLOYMENT';
+const UPDATE_COUNTDOWN = 'UPDATE_COUNTDOWN';
 
 // Action creators
 
@@ -50,16 +51,27 @@ function deleteDeployment(deployment: Deployment): DeleteDeploymentAction {
   return { type: DELETE_DEPLOYMENT, deployment };
 }
 
+interface UpdateCountdownAction {
+  type: typeof UPDATE_COUNTDOWN,
+  deployment_id: string,
+  countdown: number,
+}
+function updateCountdown(deployment_id: string, countdown: number): UpdateCountdownAction {
+  return { type: UPDATE_COUNTDOWN, deployment_id, countdown };
+}
+
 export type AppActionTypes =
   ShowErrorAction |
   SetTemplatesAction |
   SetDeploymentsAction |
   AddDeploymentAction |
-  DeleteDeploymentAction;
+  DeleteDeploymentAction |
+  UpdateCountdownAction;
 export {
   SHOW_ERROR, showError,
   SET_TEMPLATES, setTemplates,
   SET_DEPLOYMENTS, setDeployments,
   ADD_DEPLOYMENT, addDeployment,
   DELETE_DEPLOYMENT, deleteDeployment,
+  UPDATE_COUNTDOWN, updateCountdown,
 };

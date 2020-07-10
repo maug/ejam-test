@@ -1,11 +1,12 @@
 import { Deployment, Template } from "./store";
 import {
-  AppActionTypes,
   ADD_DEPLOYMENT,
+  AppActionTypes,
   DELETE_DEPLOYMENT,
   SET_DEPLOYMENTS,
   SET_TEMPLATES,
-  SHOW_ERROR
+  SHOW_ERROR,
+  UPDATE_COUNTDOWN
 } from "./actions";
 
 export interface AppState {
@@ -13,6 +14,7 @@ export interface AppState {
   error: string,
   templates: Template[],
   deployments: Deployment[],
+  countdowns: Record<string, number>;
 }
 
 const defaultState: AppState = {
@@ -20,6 +22,7 @@ const defaultState: AppState = {
   error: '',
   templates: [],
   deployments: [],
+  countdowns: {},
 }
 
 function appReducer(state: AppState = defaultState, action: AppActionTypes): AppState {
@@ -54,6 +57,12 @@ function appReducer(state: AppState = defaultState, action: AppActionTypes): App
       return {
         ...state,
         deployments: state.deployments.filter(d => d !== action.deployment),
+      };
+    }
+    case UPDATE_COUNTDOWN: {
+      return {
+        ...state,
+        countdowns: { ...state.countdowns, [action.deployment_id]: action.countdown },
       };
     }
     default:
