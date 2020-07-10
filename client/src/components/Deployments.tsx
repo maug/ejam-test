@@ -22,7 +22,8 @@ export function Deployments({ handleDeleteDeployment }: { handleDeleteDeployment
   const countdowns = useSelector((state: AppState): AppState['countdowns'] => state.countdowns);
 
   useEffect(() => {
-    getDeployments().then((deployments: Deployment[]) => dispatch(setDeployments(deployments)));
+    getDeployments().then((deployments: Deployment[]) => dispatch(setDeployments(deployments)))
+      .catch(err => dispatch(actions.showError(err.toString())));
   }, []);
 
   function handleCountdownEnd(deployment_id: string): void {

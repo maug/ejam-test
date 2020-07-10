@@ -16,7 +16,8 @@ function App() {
   const error = useSelector((state: AppState) => state.error);
 
   useEffect(() => {
-    getTemplates().then((templates: Template[]) => dispatch(actions.setTemplates(templates)));
+    getTemplates().then((templates: Template[]) => dispatch(actions.setTemplates(templates)))
+      .catch(err => dispatch(actions.showError(err.toString())));
   }, []);
 
   async function handleAddDeployment(newValue: DeploymentRaw) {
@@ -43,7 +44,11 @@ function App() {
   if (!isInitialized) {
     return (
       <Grid container alignItems="center" justify="center" style={{ minHeight: '100vh' }}>
-        <Grid item><Typography variant="h4">Loading...</Typography></Grid>
+        <Grid item>
+          <Box m={4}>
+            <Typography color={error ? 'error' : 'inherit'} variant="h4">{error ? error : 'Loading...'}</Typography>
+          </Box>
+        </Grid>
       </Grid>
     );
   } else {
