@@ -56,7 +56,7 @@ export function Deployments({ handleDeleteDeployment }: { handleDeleteDeployment
             }
           </TableCell>
           <TableCell>{dep.version}</TableCell>
-          <TableCell>{dep.url}</TableCell>
+          <TableCell style={ { wordBreak: 'break-word'} }>{dep.url}</TableCell>
           <TableCell>
             {new Date(dep.deployedAt).toLocaleString('en-US')}
           </TableCell>
