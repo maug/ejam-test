@@ -1,21 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
 import { useDispatch, useSelector } from "react-redux";
 import { Box, Container, Grid, Typography } from "@material-ui/core";
-import { Deployment, DeploymentRaw } from "./redux/store";
+import { Deployment, DeploymentRaw, Template } from "./redux/store";
 import { AppState } from "./redux/reducers";
 import { DeploymentForm } from "./components/DeploymentForm";
 import * as actions from "./redux/actions";
 import { Deployments } from "./components/Deployments";
-import { addDeployment, deleteDeployment } from "./utils/backend";
+import { addDeployment, deleteDeployment, getDeployments, getTemplates } from "./utils/backend";
 import { AlertDialog } from "./components/AlertDialog";
-
-
 
 function App() {
   const dispatch = useDispatch();
   const isInitialized = useSelector((state: AppState) => state.isInitialized);
   const error = useSelector((state: AppState) => state.error);
+
+  useEffect(() => {
+    getTemplates().then((templates: Template[]) => dispatch(actions.setTemplates(templates)));
+  }, []);
 
   async function handleAddDeployment(newValue: DeploymentRaw) {
     try {

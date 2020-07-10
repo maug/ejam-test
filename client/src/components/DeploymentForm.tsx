@@ -34,7 +34,7 @@ export function DeploymentForm({ handleAddDeployment }: { handleAddDeployment: (
         <Autocomplete
           value={template}
           onChange={(event, newValue: Template | null) => {
-            console.log('setting new template', newValue);
+            console.log('setting template', newValue);
             setTemplate(newValue);
             if (version && !newValue?.versions.includes(version)) {
               setVersion(null);
@@ -51,7 +51,7 @@ export function DeploymentForm({ handleAddDeployment }: { handleAddDeployment: (
           disabled={!template}
           value={version}
           onChange={(event, newValue) => {
-            console.log('setting new version', newValue);
+            console.log('setting version', newValue);
             setVersion(newValue);
           }}
           options={template ? template.versions : []}
