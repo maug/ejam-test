@@ -1,5 +1,4 @@
 import { Router } from 'express';
-import UserRouter from './Users';
 import TemplatesRouter from './templates';
 import DeploymentsRouter from './deployments';
 
@@ -7,7 +6,6 @@ import DeploymentsRouter from './deployments';
 const router = Router();
 
 // Add sub-routes
-router.use('/users', UserRouter);
 router.use('/templates', TemplatesRouter);
 router.use('/deployments', DeploymentsRouter);
 
