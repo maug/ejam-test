@@ -5,7 +5,7 @@ import models from "./models";
 
 // Start the server
 const port = Number(process.env.PORT || 3000);
-models.connectDb().then(async () => {
+models.init().then(async () => {
     app.listen(port, () => {
         logger.info('Express server started on port: ' + port);
     });

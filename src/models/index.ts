@@ -1,9 +1,9 @@
 import mongoose from 'mongoose';
 
-import { Deployment, getDeployments, addDeployment, deleteDeployment } from './deployment';
-import { Template, getTemplates } from './template';
+import * as deployment from './deployment';
+import * as template from './template';
 
-const connectDb = () => {
+const init = () => {
   const mongoUri = 'mongodb+srv://ejam:sonar-malapert-purr@ejam.kmysw.mongodb.net/ejam?retryWrites=true&w=majority';
   return mongoose.connect(mongoUri, {
     useUnifiedTopology: true,
@@ -15,4 +15,4 @@ const connectDb = () => {
 
 };
 
-export default { connectDb, Deployment, getDeployments, addDeployment, deleteDeployment, Template, getTemplates };
+export default { init, ...deployment, ...template };
