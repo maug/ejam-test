@@ -20,7 +20,7 @@ function App() {
       .then(() => getDeployments())
       .then((deployments: Deployment[]) => dispatch(actions.setDeployments(deployments)))
       .then(() => dispatch(actions.setInitialized(true)))
-      .catch(err => dispatch(actions.showError(err.toString())));
+      .catch(err => dispatch(actions.showError(err.message)));
   }, []);
 
   async function handleAddDeployment(newValue: DeploymentRaw) {
@@ -29,7 +29,7 @@ function App() {
       dispatch(actions.addDeployment(deployment));
       dispatch(actions.updateCountdown(deployment._id, Math.round(Math.random() * 25000) + 5000));
     } catch (e) {
-      dispatch(actions.showError(e.toString()));
+      dispatch(actions.showError(e.message));
     }
   }
 
@@ -40,7 +40,7 @@ function App() {
         dispatch(actions.deleteDeployment(deployment));
       }
     } catch (e) {
-      dispatch(actions.showError(e.toString()));
+      dispatch(actions.showError(e.message));
     }
   }
 

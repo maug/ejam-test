@@ -66,7 +66,7 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 app.use(express.static(path.join(__dirname, '../client/build')));
 
 
-app.get('*', (req: Request, res: Response) => {
+app.get('/', (req: Request, res: Response) => {
   res.sendFile(path.join(__dirname + '/../client/build/index.html'))
 });
 

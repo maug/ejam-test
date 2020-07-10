@@ -11,7 +11,7 @@ async function init() {
       await models.init(mongoUri);
     }
   } catch (e) {
-    setCriticalError(e.toString());
+    setCriticalError(e.message);
   }
   app.listen(port, () => {
     logger.info('Express server started on port: ' + port);
