@@ -9,28 +9,34 @@ import models from "../models";
 const router = Router();
 
 router.get('/', async (req: Request, res: Response) => {
-    const deployments = await models.Deployment.find().sort({ deployedAt: -1 });
-    return res.status(OK).json(deployments);
+    try {
+        const deployments = await models.getDeployments();
+        return res.status(OK).json(deployments);
+    } catch (e) {
+        return res.status(BAD_REQUEST).json({ error: e.toString() });
+    }
 });
 
 router.post('/', async (req: Request, res: Response) => {
-    const { templateName, version, url } = req.body;
-    if (!templateName || !version || !url ) {
-        return res.status(BAD_REQUEST).json({
-            error: paramMissingError,
-        });
+    try {
+        const { templateName, version, url } = req.body;
+        if (!templateName || !version || !url ) {
+            return res.status(BAD_REQUEST).json({
+                error: paramMissingError,
+            });
+        }
+        const deployment = await models.addDeployment({ templateName, version, url });
+        console.log('deployment', deployment);
+        return res.status(OK).json(deployment);
+    } catch (e) {
+        return res.status(BAD_REQUEST).json({ error: e.toString() });
     }
-    let deployment = new models.Deployment({ templateName, version, url, deployedAt: new Date()});
-    deployment = await deployment.save();
-    console.log('deployment', deployment);
-    return res.status(OK).json(deployment);
 });
 
 router.delete('/:id', async (req: Request, res: Response) => {
     try {
-        const result = await models.Deployment.deleteOne({ _id: req.params.id });
-        console.log('delete', result);
-        return res.status(OK).json(result.deletedCount === 1);
+        const hasBeenDeleted = await models.deleteDeployment(req.params.id);
+        return res.status(OK).json(hasBeenDeleted);
     } catch (e) {
         return res.status(BAD_REQUEST).json({ error: e.toString() });
     }

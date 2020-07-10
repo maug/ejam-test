@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
-import { Deployment } from './deployment';
-import { Template } from './template';
+import { Deployment, getDeployments, addDeployment, deleteDeployment } from './deployment';
+import { Template, getTemplates } from './template';
 
 const connectDb = () => {
   const mongoUri = 'mongodb+srv://ejam:sonar-malapert-purr@ejam.kmysw.mongodb.net/ejam?retryWrites=true&w=majority';
@@ -15,4 +15,4 @@ const connectDb = () => {
 
 };
 
-export default { connectDb, Deployment, Template };
+export default { connectDb, Deployment, getDeployments, addDeployment, deleteDeployment, Template, getTemplates };

@@ -1,5 +1,5 @@
 import { Request, Response, Router } from 'express';
-import { OK } from 'http-status-codes';
+import { BAD_REQUEST, OK } from 'http-status-codes';
 
 import models from "../models";
 
@@ -7,8 +7,12 @@ import models from "../models";
 const router = Router();
 
 router.get('/', async (req: Request, res: Response) => {
-    const templates = await models.Template.find();
-    return res.status(OK).json(templates);
+    try {
+        const templates = await models.getTemplates();
+        return res.status(OK).json(templates);
+    } catch (e) {
+        return res.status(BAD_REQUEST).json({ error: e.toString() });
+    }
 });
 
 export default router;

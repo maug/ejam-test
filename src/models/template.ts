@@ -10,6 +10,10 @@ interface TemplateProps extends Document {
     versions: string[],
 }
 
-const Template: Model<TemplateProps> = mongoose.model('Template', templateSchema, 'templates');
+const Template: Model<TemplateProps> = mongoose.model<TemplateProps>('Template', templateSchema, 'templates');
 
-export { Template };
+function getTemplates(): Promise<TemplateProps[]> {
+    return Template.find().exec();
+}
+
+export { Template, getTemplates };
