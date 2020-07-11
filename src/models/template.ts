@@ -5,14 +5,14 @@ const templateSchema = new Schema({
     versions: [String],
 });
 
-interface TemplateProps extends Document {
+interface TemplateDoc extends Document {
     name: string,
     versions: string[],
 }
 
-const Template: Model<TemplateProps> = mongoose.model<TemplateProps>('Template', templateSchema, 'templates');
+const Template: Model<TemplateDoc> = mongoose.model<TemplateDoc>('Template', templateSchema, 'templates');
 
-function getTemplates(): Promise<TemplateProps[]> {
+function getTemplates(): Promise<TemplateDoc[]> {
     return Template.find().exec();
 }
 

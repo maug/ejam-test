@@ -8,20 +8,20 @@ const deploymentSchema = new Schema({
     deployedAt: Date,
 });
 
-interface DeploymentProps extends Document {
+interface DeploymentDoc extends Document {
     url: string,
     templateName: string,
     version: string,
     deployedAt: Date,
 }
 
-const Deployment: Model<DeploymentProps> = mongoose.model('Deployment', deploymentSchema, 'deployments');
+const Deployment: Model<DeploymentDoc> = mongoose.model('Deployment', deploymentSchema, 'deployments');
 
-function getDeployments(): Promise<DeploymentProps[]> {
+function getDeployments(): Promise<DeploymentDoc[]> {
     return Deployment.find().sort({ deployedAt: -1 }).exec();
 }
 
-function addDeployment(props: { templateName: string, version: string, url: string }): Promise<DeploymentProps> {
+function addDeployment(props: { templateName: string, version: string, url: string }): Promise<DeploymentDoc> {
     let deployment = new models.Deployment({ ...props, deployedAt: new Date()});
     return deployment.save();
 }
