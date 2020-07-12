@@ -10,7 +10,7 @@ import {
   UPDATE_COUNTDOWN
 } from "./actions";
 
-export interface AppState {
+interface AppState {
   isInitialized: boolean,
   error: string,
   templates: Template[],
@@ -18,7 +18,7 @@ export interface AppState {
   countdowns: Record<string, number>;
 }
 
-const defaultState: AppState = {
+const initialState: AppState = {
   isInitialized: false,
   error: '',
   templates: [],
@@ -26,7 +26,7 @@ const defaultState: AppState = {
   countdowns: {},
 }
 
-function appReducer(state: AppState = defaultState, action: AppActionTypes): AppState {
+function appReducer(state: AppState = initialState, action: AppActionTypes): AppState {
   console.log('appReducer', action);
   switch (action.type) {
     case SHOW_ERROR: {
@@ -76,4 +76,5 @@ function appReducer(state: AppState = defaultState, action: AppActionTypes): App
   }
 }
 
-export { appReducer };
+export type { AppState }
+export { appReducer, initialState };

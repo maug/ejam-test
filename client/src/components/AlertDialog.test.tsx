@@ -1,5 +1,5 @@
 import React from 'react';
-import { act, render, screen, cleanup, fireEvent } from '@testing-library/react';
+import { act, render, screen, cleanup, fireEvent } from '../utils/test-utils';
 import { AlertDialog } from './AlertDialog';
 
 afterEach(cleanup);

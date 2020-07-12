@@ -26,7 +26,6 @@ export function DeploymentForm({ handleAddDeployment }: { handleAddDeployment: (
   const [url, setUrl] = useState<string>('');
 
   const classes = useStyles();
-
   return (
     <Box style={{textAlign: "center"}}>
       <img src="logo_ejam.png"  alt="Logo eJam" style={{ width: "100px" }}/><br/><br/>
@@ -43,6 +42,7 @@ export function DeploymentForm({ handleAddDeployment }: { handleAddDeployment: (
           options={templates}
           getOptionLabel={t => t.name}
           renderInput={(params) => <TextField {...params} label="Select template" variant="outlined" />}
+          data-testid="template"
         />
       </FormControl>
       <br/><br/>
@@ -56,6 +56,7 @@ export function DeploymentForm({ handleAddDeployment }: { handleAddDeployment: (
           }}
           options={template ? template.versions : []}
           renderInput={(params) => <TextField {...params} label="Select version" variant="outlined" />}
+          data-testid="version"
         />
       </FormControl>
       <br/><br/>
@@ -67,6 +68,7 @@ export function DeploymentForm({ handleAddDeployment }: { handleAddDeployment: (
           }}
           label="Enter URL"
           variant="outlined"
+          data-testid="url"
         />
       </FormControl>
       <br/><br/>
@@ -79,6 +81,7 @@ export function DeploymentForm({ handleAddDeployment }: { handleAddDeployment: (
         })}
         variant="contained"
         color="primary"
+        data-testid="btn-add-deployment"
       >
         Add deployment
       </Button>

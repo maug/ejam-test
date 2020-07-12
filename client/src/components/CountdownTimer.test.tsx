@@ -1,5 +1,5 @@
 import React from 'react';
-import { act, render, screen, cleanup } from '@testing-library/react';
+import { act, render, screen, cleanup } from '../utils/test-utils';
 import { CountdownTimer } from './CountdownTimer';
 
 let fakeDate = { now: 1 };
