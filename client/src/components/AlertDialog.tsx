@@ -24,7 +24,7 @@ export function AlertDialog({ open, handleClose, title, text }:
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose} color="primary" autoFocus>
+        <Button onClick={handleClose} color="primary" autoFocus data-testid={"btn_close"}>
           Close
         </Button>
       </DialogActions>

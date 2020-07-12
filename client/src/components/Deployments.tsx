@@ -30,6 +30,7 @@ export function Deployments({ handleDeleteDeployment }: { handleDeleteDeployment
           <TableCell component="th" scope="row" colSpan={5}>
             <CountdownTimer
               countdownFrom={countdowns[dep._id]}
+              step={9}
               handleEnd={() => handleCountdownEnd(dep._id)}
             />
           </TableCell>
@@ -40,13 +41,6 @@ export function Deployments({ handleDeleteDeployment }: { handleDeleteDeployment
         <TableRow key={dep._id}>
           <TableCell component="th" scope="row">
             {dep.templateName}
-            {countdowns[dep._id] ?
-              <CountdownTimer
-                countdownFrom={countdowns[dep._id]}
-                handleEnd={() => handleCountdownEnd(dep._id)}
-              />
-              : null
-            }
           </TableCell>
           <TableCell>{dep.version}</TableCell>
           <TableCell style={ { wordBreak: 'break-word'} }>{dep.url}</TableCell>

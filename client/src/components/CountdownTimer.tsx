@@ -35,18 +35,17 @@ function toTime(time: number): Time {
   };
 }
 
-export function CountdownTimer({ countdownFrom, handleEnd }:
-  { countdownFrom: number, handleEnd: () => void }) {
+export function CountdownTimer(props: { countdownFrom: number, step: number,  handleEnd: () => void }) {
 
   const [prevTime, setPrevTime] = useState<number | null>(null);
-  const [timeInMilliseconds, setTimeInMilliseconds] = useState<number>(countdownFrom);
+  const [timeInMilliseconds, setTimeInMilliseconds] = useState<number>(props.countdownFrom);
   const [time, setTime] = useState<Time | null>(null);
-  const [delay, setDelay] = useState<number>(9);
+  const [delay, setDelay] = useState<number>(props.step);
 
   useInterval(
     () => {
       const now = Date.now();
-      const prev = prevTime ? prevTime : now;
+      const prev = prevTime ?? now;
       const diffTime = now - prev;
       const newMilliTime = Math.max(timeInMilliseconds - diffTime, 0);
       const newTime = toTime(newMilliTime);
@@ -55,17 +54,17 @@ export function CountdownTimer({ countdownFrom, handleEnd }:
       setTime(newTime);
       if (newMilliTime === 0) {
         setDelay(0);
-        handleEnd();
+        props.handleEnd();
       }
     },
-    countdownFrom && delay ? delay : 0
+    props.countdownFrom && delay ? delay : 0
   );
 
   return (
     <div>
-      {time && countdownFrom ?
+      {time && props.countdownFrom ?
         <LinearProgressWithLabel
-          value={Math.round(100 - (timeInMilliseconds * 100 / countdownFrom))}
+          value={Math.round(100 - (timeInMilliseconds * 100 / props.countdownFrom))}
           labelLeft={`${time.minutes}:${time.seconds}:${time.milliseconds}`}
         />
         : null
