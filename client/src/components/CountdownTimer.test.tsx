@@ -6,12 +6,12 @@ let fakeDate = { now: 1 };
 
 beforeEach(() => {
   jest.useFakeTimers();
-  Date.now = jest.spyOn(Date, 'now').mockImplementation(() => fakeDate.now);
+  Date.now = jest.spyOn(Date, 'now').mockImplementation(() => fakeDate.now) as any;
 });
 
 afterEach(() => {
   jest.useRealTimers();
-  Date.now.mockRestore();
+  (Date.now as any).mockRestore();
   return cleanup();
 });
 

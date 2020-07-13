@@ -16,7 +16,7 @@ const mockedInitialState: Partial<AppState> = {
   ]
 }
 
-function selectInAutocomplete(inpTextbox: any, value: string) {
+function selectInAutocomplete(inpTextbox: HTMLElement, value: string) {
   // click into the component
   inpTextbox.focus();
   // set value
@@ -55,21 +55,60 @@ it('DeploymentForm can add new deployment', () => {
 
   selectInAutocomplete(inpAutocomplete, 't');
 
-  expect(inpAutocomplete.value).toEqual('t1');
+  expect(inpAutocomplete).toHaveValue('t1');
   expect(inpVersion).toBeEnabled();
   expect(btn).toBeDisabled();
 
   selectInAutocomplete(inpVersion, 't');
 
-  expect(inpVersion.value).toEqual('t1v1');
+  expect(inpVersion).toHaveValue('t1v1');
   expect(btn).toBeDisabled();
 
   fireEvent.change(inpUrl, { target: { value: 'example_url' } });
 
+  expect(inpUrl).toHaveValue('example_url');
   expect(btn).toBeEnabled();
 
   fireEvent.click(btn);
 
   expect(onHandleAddDeployment).toBeCalledTimes(1);
   expect(onHandleAddDeployment).toBeCalledWith({ templateName: 't1', version: 't1v1', url: 'example_url' });
+});
+
+it('DeploymentForm properly updates version when template is changed', () => {
+  act(() => {
+    render(<DeploymentForm handleAddDeployment={() => null}/>, { initialState: mockedInitialState });
+  });
+  const [inpAutocomplete, inpVersion, inpUrl, ...rest] = screen.getAllByRole('textbox');
+
+  selectInAutocomplete(inpAutocomplete, 't1');
+
+  expect(inpAutocomplete).toHaveValue('t1');
+
+  selectInAutocomplete(inpVersion, 'common');
+
+  expect(inpVersion).toHaveValue('common');
+
+  selectInAutocomplete(inpAutocomplete, 't2');
+
+  expect(inpVersion).toHaveValue('common');
+});
+
+it('DeploymentForm clears version when template is changed', () => {
+  act(() => {
+    render(<DeploymentForm handleAddDeployment={() => null}/>, { initialState: mockedInitialState });
+  });
+  const [inpAutocomplete, inpVersion, inpUrl, ...rest] = screen.getAllByRole('textbox');
+
+  selectInAutocomplete(inpAutocomplete, 't1');
+
+  expect(inpAutocomplete).toHaveValue('t1');
+
+  selectInAutocomplete(inpVersion, 't1v1');
+
+  expect(inpVersion).toHaveValue('t1v1');
+
+  selectInAutocomplete(inpAutocomplete, 't2');
+
+  expect(inpVersion).toHaveValue('');
 });
